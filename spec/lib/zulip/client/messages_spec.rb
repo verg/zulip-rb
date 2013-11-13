@@ -12,6 +12,8 @@ describe Zulip::Messages do
     fake_connection = double("fake connection", post: fake_response )
     client.connection = fake_connection
 
+    fake_connection.should_receive(:params=).with({"type"=>"stream", "content"=>content,
+                                                   "to" => stream, "subject"=>subject})
     fake_connection.should_receive(:post).with("v1/messages")
     client.send_message(subject, content, stream)
   end
@@ -22,10 +24,12 @@ describe Zulip::Messages do
 
     client = Zulip::Client.new
 
-    fake_response = fixture("sending-private-message-success.json")
-    fake_connection = double("fake connection", post: fake_response )
-    client.connection = fake_connection
+     fake_response = fixture("sending-private-message-success.json")
+     fake_connection = double("fake connection", post: fake_response )
+     client.connection = fake_connection
 
+    fake_connection.should_receive(:params=).with({"type"=>"private", "content"=>content,
+                                                   "to" => recipient})
     fake_connection.should_receive(:post).with("v1/messages")
     client.send_private_message(content, recipient)
   end

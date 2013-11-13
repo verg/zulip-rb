@@ -15,11 +15,13 @@ module Zulip
 
     # recipient may be a stream or user-email
     def post_message(type, content, recipient, subject=nil)
-      connection.post("v1/messages") do |request|
-        params = { "type" => type, "content" => content, "to" => recipient }
-        params = params.merge( { "subject" => subject } ) if subject
-        request.params = params
-      end
+      connection.params = build_params(type, content, recipient, subject)
+      connection.post("v1/messages") # do |request|
+    end
+
+    def build_params(type, content, recipient, subject=nil)
+      params = subject ? {"subject" => subject } : {}
+      params = params.merge({ "type" => type, "content" => content, "to" => recipient })
     end
 
   end
