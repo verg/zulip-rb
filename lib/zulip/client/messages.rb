@@ -7,6 +7,10 @@ module Zulip
       post_message("stream", content, to_stream, subject)
     end
 
+    def send_private_message(content, recipient_user)
+      post_message("private", content, recipient_user)
+    end
+
     private
 
     # recipient may be a stream or user-email
