@@ -1,6 +1,7 @@
 require 'helper'
-require 'json'
 require_relative "../../../../lib/zulip"
+
+require 'json'
 
 describe Zulip::Messages do
   it "posts a message to a stream" do

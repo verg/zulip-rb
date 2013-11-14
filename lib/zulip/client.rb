@@ -1,8 +1,10 @@
 require 'zulip/client/messages'
+require 'zulip/client/queue_registration'
 
 module Zulip
   class Client
     include Zulip::Messages
+    include Zulip::QueueRegistration
 
     attr_accessor :bot_email_address, :bot_api_key
     attr_writer :connection
@@ -22,6 +24,10 @@ module Zulip
       conn = Faraday.new(url: ENDPOINT)
       conn.basic_auth(bot_email_address, bot_api_key)
       conn
+    end
+
+    def json_encode_list(items)
+      JSON.generate(Array(items).flatten)
     end
 
   end

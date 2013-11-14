@@ -25,9 +25,5 @@ module Zulip
                               "to" => json_encode_list(recipients_or_stream) })
     end
 
-    def json_encode_list(items)
-      JSON.generate(Array(items).flatten)
-    end
-
   end
 end
