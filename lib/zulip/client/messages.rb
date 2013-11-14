@@ -1,4 +1,5 @@
 require 'faraday'
+require 'json'
 
 module Zulip
   module Messages
@@ -7,21 +8,25 @@ module Zulip
       post_message("stream", content, to_stream, subject)
     end
 
-    def send_private_message(content, recipient_user)
-      post_message("private", content, recipient_user)
+    def send_private_message(content, *recipient_users)
+      post_message("private", content, recipient_users)
     end
 
     private
 
-    # recipient may be a stream or user-email
-    def post_message(type, content, recipient, subject=nil)
-      connection.params = build_params(type, content, recipient, subject)
-      connection.post("v1/messages") # do |request|
+    def post_message(type, content, recipients_or_stream, subject=nil)
+      connection.params = build_params(type, content, recipients_or_stream, subject)
+      connection.post("v1/messages")
     end
 
-    def build_params(type, content, recipient, subject=nil)
+    def build_params(type, content, recipients_or_stream, subject=nil)
       params = subject ? {"subject" => subject } : {}
-      params = params.merge({ "type" => type, "content" => content, "to" => recipient })
+      params = params.merge({ "type" => type, "content" => content,
+                              "to" => json_encode_list(recipients_or_stream) })
+    end
+
+    def json_encode_list(items)
+      JSON.generate(Array(items).flatten)
     end
 
   end
