@@ -1,8 +1,6 @@
 require 'helper'
 require_relative "../../../../lib/zulip"
 
-require 'json'
-
 describe Zulip::Messages do
   it "posts a message to a stream" do
     subject = "sending some internet websites to the internet"

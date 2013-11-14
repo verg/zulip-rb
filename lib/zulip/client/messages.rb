@@ -1,5 +1,4 @@
 require 'faraday'
-require 'json'
 
 module Zulip
   module Messages
@@ -15,11 +14,12 @@ module Zulip
     private
 
     def post_message(type, content, recipients_or_stream, subject=nil)
-      connection.params = build_params(type, content, recipients_or_stream, subject)
+      connection.params = build_post_message_params(type, content,
+                                                    recipients_or_stream, subject)
       connection.post("v1/messages")
     end
 
-    def build_params(type, content, recipients_or_stream, subject=nil)
+    def build_post_message_params(type, content, recipients_or_stream, subject=nil)
       params = subject ? {"subject" => subject } : {}
       params = params.merge({ "type" => type, "content" => content,
                               "to" => json_encode_list(recipients_or_stream) })
