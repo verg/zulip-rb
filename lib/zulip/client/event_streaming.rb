@@ -5,7 +5,7 @@ module Zulip
     # Alternativly takes a queue id and a last event id
     def get_events(registered_queue_or_queue_id, last_event_id=nil)
       connection.params = build_get_event_params(registered_queue_or_queue_id, last_event_id)
-      event_response
+      event_response.fetch("events")
     end
 
     private

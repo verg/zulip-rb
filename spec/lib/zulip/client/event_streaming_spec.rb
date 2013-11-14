@@ -13,6 +13,6 @@ describe Zulip::EventStreaming do
     registered_queue = double("queue", queue_id: "id", last_event_id: -1)
     response = client.get_events(registered_queue)
 
-    expect(response).to eq JSON.parse(fixture("get-message-event-success.json"))
+    expect(response).to eq JSON.parse(fixture("get-message-event-success.json")).fetch("events")
   end
 end
