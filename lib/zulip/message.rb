@@ -8,8 +8,6 @@ module Zulip
     alias :stream :display_recipient
 
     def initialize(attrs={})
-      @attrs = attrs
-
       attrs.each do |name, value|
         instance_variable_set("@#{name}", value)
       end
