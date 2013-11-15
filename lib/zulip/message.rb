@@ -6,6 +6,7 @@ module Zulip
       :type, :subject
 
     alias :stream :display_recipient
+    alias :display_recipients :display_recipient
 
     def initialize(attrs={})
       attrs.each do |name, value|

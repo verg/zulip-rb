@@ -8,9 +8,14 @@ describe Zulip::EventParser do
     expect(result).to be_kind_of Zulip::Message
   end
 
+  it "parses private message events" do
+    event_hash = parsed_json_fixture("get-private-message.json")
+    result = Zulip::EventParser.parse(event_hash)
+    expect(result).to be_kind_of Zulip::PrivateMessage
+  end
+
   it "parses heartbeat events"
   it "parses presence events"
-  it "parses private message events"
   it "parses subscriptions events"
   it "parses error events"
 end
