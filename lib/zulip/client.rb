@@ -3,12 +3,14 @@ require 'json'
 require 'zulip/client/messages'
 require 'zulip/client/queue_registration'
 require 'zulip/client/event_streaming'
+require 'zulip/client/event_parser'
 
 module Zulip
   class Client
     include Zulip::Messages
     include Zulip::QueueRegistration
     include Zulip::EventStreaming
+    include Zulip::EventParser
 
     attr_accessor :bot_email_address, :bot_api_key
     attr_writer :connection
