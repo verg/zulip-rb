@@ -21,7 +21,7 @@ module Zulip
 
     def build_post_message_params(type, content, recipients_or_stream, subject=nil)
       params = subject ? {"subject" => subject } : {}
-      params = params.merge({ "type" => type, "content" => content,
+      params.merge({ "type" => type, "content" => content,
                               "to" => json_encode_list(recipients_or_stream) })
     end
 
