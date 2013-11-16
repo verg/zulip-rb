@@ -20,11 +20,11 @@ module Zulip
       yield self if block_given?
     end
 
-    private
-
     def connection
       @connection ||= initialize_connection
     end
+
+    private
 
     def initialize_connection
       conn = Faraday.new(url: ENDPOINT)
