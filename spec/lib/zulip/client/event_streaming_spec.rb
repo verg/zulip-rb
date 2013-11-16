@@ -25,16 +25,19 @@ describe Zulip::EventStreaming do
 
   context "streaming messages" do
 
+    let(:client) { Zulip::Client.new }
+    let(:fake_connection) { double("fake connection", :params= => nil) }
+    let(:fake_response) { double("response") }
+    let(:fake_queue) { double("fake queue", queue_id: "id", last_event_id: -1) }
+
     describe "#stream_private_messages" do
       it "returns private messages viewable to the bot" do
-        fake_connection = double("fake connection", :params= => nil)
-        fake_response = double("response")
+
+        # Returns a public-message, then a private message
         fake_response.stub(:body).and_return(public_message_fixture, private_message_fixture)
         fake_connection.stub(:get).with('/v1/events').and_return(fake_response)
-
-        client = Zulip::Client.new
-        fake_queue = double("fake queue", queue_id: "id", last_event_id: -1)
         client.stub(:register).and_return(fake_queue)
+
         client.connection = fake_connection
 
         messages = []
@@ -51,14 +54,10 @@ describe Zulip::EventStreaming do
 
     describe "#stream_public_messages" do
       it "only returns public messages" do
-        fake_connection = double("fake connection", :params= => nil)
-        fake_response = double("response")
         fake_response.stub(:body).and_return(private_message_fixture, public_message_fixture)
-        fake_queue = double("fake queue", queue_id: "id", last_event_id: -1)
         fake_connection.stub(:get).with('/v1/events').and_return(fake_response)
-
-        client = Zulip::Client.new
         client.stub(:register).and_return(fake_queue)
+
         client.connection = fake_connection
 
         messages = []
@@ -75,14 +74,10 @@ describe Zulip::EventStreaming do
 
     describe "#stream_messages" do
       it "streams both public and private messages" do
-        fake_connection = double("fake connection", :params= => nil)
-        fake_response = double("response")
         fake_response.stub(:body).and_return(public_message_fixture, private_message_fixture)
-        fake_queue = double("fake queue", queue_id: "id", last_event_id: -1)
         fake_connection.stub(:get).with('/v1/events').and_return(fake_response)
-
-        client = Zulip::Client.new
         client.stub(:register).and_return(fake_queue)
+
         client.connection = fake_connection
 
         messages = []
