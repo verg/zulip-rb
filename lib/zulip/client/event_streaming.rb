@@ -5,9 +5,19 @@ module Zulip
       stream_events("message", &block)
     end
 
-    def stream_events(*event_types, &block)
-      event_types.flatten!
+    def stream_private_messages(&block)
+      stream_events("message", yield_raw: true) do |event|
+        yield Zulip::EventParser.parse(event) if private_message?(event)
+      end
+    end
 
+    def stream_public_messages(&block)
+      stream_events("message", yield_raw: true) do |event|
+        yield Zulip::EventParser.parse(event) if public_message?(event)
+      end
+    end
+
+    def stream_events(event_types, opts={}, &block)
       queue = register(event_types)
       queue_id = queue.queue_id
       last_event_id = queue.last_event_id
@@ -17,12 +27,10 @@ module Zulip
         last_event_id = max_event_id_from(events)
 
         events.each do |event|
-          yield Zulip::EventParser.parse(event) if event_types.include?(event["type"])
+          yield parsed_or_raw_event(event, opts) if event_types.include?(event["type"])
         end
-
       end
     end
-
 
     # Makes a longpulling request on an event queue
     # Accepts an object that responds to #queue_id && #last_event_id
@@ -54,6 +62,22 @@ module Zulip
 
     def max_event_id_from(events)
       events.map{ |event| event['id']}.max
+    end
+
+    def private_message?(event)
+      event['message']['type'] == "private"
+    end
+
+    def public_message?(event)
+      event['message']['type'] == "stream"
+    end
+
+    def parsed_or_raw_event(event, opts)
+      if opts[:yield_raw]
+        event
+      else
+        Zulip::EventParser.parse(event)
+      end
     end
   end
 end
