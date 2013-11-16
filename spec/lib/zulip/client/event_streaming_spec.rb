@@ -7,22 +7,6 @@ describe Zulip::EventStreaming do
   let(:private_message_fixture) { fixture("get-private-message.json") }
   let(:public_message_fixture) { fixture("get-message-event-success.json") }
 
-  describe "#get_events" do
-    it 'issues a longpulling request for new events' do
-      fake_connection = double("fake connection", :params= => nil)
-      fake_response = double("response", body: public_message_fixture)
-      fake_connection.stub(:get).with('/v1/events').and_return(fake_response)
-
-      client = Zulip::Client.new
-      client.connection = fake_connection
-
-      registered_queue = double("queue", queue_id: "id", last_event_id: -1)
-      response = client.get_events(registered_queue)
-
-      expect(response).to eq JSON.parse(fixture("get-message-event-success.json")).fetch("events")
-    end
-  end
-
   context "streaming messages" do
 
     let(:client) { Zulip::Client.new }
