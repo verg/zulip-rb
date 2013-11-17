@@ -1,6 +1,7 @@
 require 'json'
 
 require 'zulip/client/messages'
+require 'zulip/client/users'
 require 'zulip/client/queue_registration'
 require 'zulip/client/event_streaming'
 require 'zulip/client/event_parser'
@@ -8,6 +9,7 @@ require 'zulip/client/event_parser'
 module Zulip
   class Client
     include Zulip::Messages
+    include Zulip::Users
     include Zulip::QueueRegistration
     include Zulip::EventStreaming
     include Zulip::EventParser
@@ -34,6 +36,14 @@ module Zulip
 
     def json_encode_list(items)
       JSON.generate(Array(items).flatten)
+    end
+
+    def parse_response(http_response)
+      parse_json(http_response.body)
+    end
+
+    def parse_json(json)
+      JSON.parse(json)
     end
 
   end
