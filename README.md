@@ -6,7 +6,7 @@ A ruby interface to the Zulip API.
 
 Add this line to your application's Gemfile:
 
-`gem 'zulip-rb'`
+`gem 'zulip'`
 
 And then execute:
 
