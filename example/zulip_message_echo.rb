@@ -8,7 +8,7 @@ class ZulipEcho
   def run
     client = Zulip::Client.new do |config|
       config.bot_email_address = ENV['BOT_EMAIL_ADDRESS'] || "bot@example.com"
-      config.bot_api_key = ENV['BOT_API_KEY'] || "apikey"
+      config.api_key = ENV['BOT_API_KEY'] || "apikey"
     end
 
     client.stream_messages do |message|
@@ -24,4 +24,5 @@ class ZulipEcho
     "#{message.sender_full_name}, posted to #{message.stream}:\n #{message.subject}: #{message.content}"
   end
 end
+
 ZulipEcho.new.run
