@@ -1,3 +1,5 @@
+require 'rubygems'
+
 require 'zulip/version'
 require 'zulip/client'
 require 'zulip/message'

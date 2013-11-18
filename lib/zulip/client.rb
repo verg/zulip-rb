@@ -1,4 +1,5 @@
 require 'json'
+require 'faraday'
 
 require 'zulip/client/messages'
 require 'zulip/client/users'
