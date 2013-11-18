@@ -9,12 +9,12 @@ require 'zulip/client/event_parser'
 
 module Zulip
   class Client
-    include Zulip::Messages
-    include Zulip::Users
-    include Zulip::StreamSubscriptions
-    include Zulip::QueueRegistration
-    include Zulip::EventStreaming
-    include Zulip::EventParser
+    include Zulip::Client::Messages
+    include Zulip::Client::Users
+    include Zulip::Client::StreamSubscriptions
+    include Zulip::Client::QueueRegistration
+    include Zulip::Client::EventStreaming
+    include Zulip::Client::EventParser
 
     attr_accessor :bot_email_address, :api_key
     attr_writer :connection
