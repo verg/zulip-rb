@@ -11,13 +11,14 @@ module Zulip
       if event_types
         connection.params = { "event_types" => json_encode_list(event_types) }
       end
+      require 'pry'; binding.pry
 
       QueueRegistrationResponse.new( registration_response['queue_id'],
                                     registration_response['last_event_id'] )
     end
 
     def registration_response
-      @registration_response ||= JSON.parse(connection.post("/v1/register").body)
+      @registration_response ||= parse_json(connection.post("v1/register").body)
     end
   end
 end

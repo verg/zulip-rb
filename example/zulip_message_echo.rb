@@ -12,9 +12,7 @@ class ZulipEcho
     end
 
     client.stream_messages do |message|
-      if message.stream == "test-stream"
-        client.send_private_message(private_message_content(message), "ryanvergeront@gmail.com")
-      end
+      client.send_private_message(private_message_content(message), "example@gmail.com")
     end
   end
 

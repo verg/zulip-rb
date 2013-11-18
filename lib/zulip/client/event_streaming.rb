@@ -25,7 +25,7 @@ module Zulip
 
     private
 
-    def stream_raw_events(event_types, opts={}, &block)
+    def stream_raw_events(event_types, &block)
       queue = register(event_types)
       queue_id = queue.queue_id
       last_event_id = queue.last_event_id

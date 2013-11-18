@@ -32,7 +32,7 @@ module Zulip
 
     def initialize_connection
       conn = Faraday.new(url: ENDPOINT)
-      conn.basic_auth(bot_email_address, bot_api_key)
+      conn.basic_auth(bot_email_address, api_key)
       conn
     end
 
