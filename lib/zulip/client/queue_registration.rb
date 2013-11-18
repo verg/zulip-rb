@@ -11,7 +11,6 @@ module Zulip
       if event_types
         connection.params = { "event_types" => json_encode_list(event_types) }
       end
-      require 'pry'; binding.pry
 
       QueueRegistrationResponse.new( registration_response['queue_id'],
                                     registration_response['last_event_id'] )
