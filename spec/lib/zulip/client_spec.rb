@@ -6,11 +6,11 @@ describe Zulip::Client do
 
       client = Zulip::Client.new do |config|
         config.bot_email_address = "bot@example.com"
-        config.bot_api_key = "apikey"
+        config.api_key = "apikey"
       end
 
       expect(client.bot_email_address).to eq "bot@example.com"
-      expect(client.bot_api_key).to eq "apikey"
+      expect(client.api_key).to eq "apikey"
     end
   end
 end

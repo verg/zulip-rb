@@ -7,13 +7,13 @@ describe Zulip::QueueRegistration do
       it "posts to the register api" do
         fake_connection = double("fake connection")
         fake_response = double("response", body: fixture("queue-registration-success.json"))
-        fake_connection.stub(:post).with("/v1/register").and_return(fake_response)
+        fake_connection.stub(:post).with("v1/register").and_return(fake_response)
 
         client = Zulip::Client.new
         client.connection = fake_connection
 
         fake_connection.should_receive(:params=).with( { "event_types" => '["message"]' } )
-        fake_connection.should_receive(:post).with("/v1/register")
+        fake_connection.should_receive(:post).with("v1/register")
 
         stream_type = :message
         client.register(stream_type)
@@ -22,7 +22,7 @@ describe Zulip::QueueRegistration do
       it "returns an object with the queue's id and last event id" do
         fake_response = double("response", body: fixture("queue-registration-success.json"))
         fake_connection = double("fake connection", :params= => nil )
-        fake_connection.stub(:post).with("/v1/register").and_return(fake_response)
+        fake_connection.stub(:post).with("v1/register").and_return(fake_response)
 
         client = Zulip::Client.new
         client.connection = fake_connection
