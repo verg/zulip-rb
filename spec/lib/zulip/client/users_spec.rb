@@ -17,12 +17,4 @@ describe Zulip::Users do
     end
   end
 
-  describe "#get_subscriptions" do
-  end
-
-  describe "#add_subscription" do
-  end
-
-  describe "#remove_subscription" do
-  end
 end
