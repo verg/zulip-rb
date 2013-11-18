@@ -16,7 +16,7 @@ module Zulip
     include Zulip::EventStreaming
     include Zulip::EventParser
 
-    attr_accessor :bot_email_address, :bot_api_key
+    attr_accessor :bot_email_address, :api_key
     attr_writer :connection
     ENDPOINT = "https://api.zulip.com"
 
