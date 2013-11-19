@@ -5,7 +5,7 @@ module Zulip
   class Client
     describe Users do
       describe "get_users" do
-        it "returns users in the bot's realm" do
+        it "returns a list of users" do
 
           fake_http_response = double("fake http response", body: fixture("get-users.json"))
           fake_connection = double("fake connection", get: fake_http_response)

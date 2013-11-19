@@ -5,7 +5,7 @@ module Zulip
   class Client
     describe StreamSubscriptions do
       describe "#get_subscriptions" do
-        it "returns the bot's stream subscriptions" do
+        it "returns the user's stream subscriptions" do
           fake_http_response = double("fake http response",
                                       body: fixture("get-user-subscriptions.json"))
           fake_connection = double("fake connection", get: fake_http_response)

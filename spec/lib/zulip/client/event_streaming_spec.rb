@@ -17,7 +17,7 @@ module Zulip
         let(:fake_queue) { double("fake queue", queue_id: "id", last_event_id: -1) }
 
         describe "#stream_private_messages" do
-          it "returns private messages viewable to the bot" do
+          it "returns private messages viewable to the user" do
 
             # Returns a public-message, then a private message
             fake_response.stub(:body).and_return(public_message_fixture, private_message_fixture)

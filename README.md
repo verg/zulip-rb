@@ -17,19 +17,16 @@ Or install it yourself as:
 `$ gem install zulip-rb`
 
 ### Configuration
-You'll need to register a bot to use the Zulip API.
 You can obtain your Zulip API key, create bots, and manage bots all
 from your Zulip [settings page](https://zulip.com/#settings).
 
-Set your api key and your bot's email address by passing a block to your Zulip::Client instance:
+Set your api key and email address by passing a block to your Zulip::Client instance:
 ```ruby
 client = Zulip::Client.new do |config|
-config.bot_email_address = "YOUR_BOTS_EMAIL_ADDRESS"
+config.email_address = "YOUR_EMAIL_ADDRESS"
 config.api_key = "YOUR_API_KEY"
 end
 ```
-
-You'll need to subscribe your bot to streams you want to read from. Do so by adding your bot's email to the stream's membership from a zulip client, or use the #subscribe method (see example below).
 
 ### Usage
 
@@ -50,12 +47,12 @@ client.stream_messages do |message|
 end
 ```
 
-Get your bot's current subscriptions:
+Get your current subscriptions:
 ```ruby
 client.get_subscriptions
 ```
 
-Subscribe your bot to a stream, passing the stream name:
+Subscribe to a stream, passing the stream name:
 ```ruby
 client.subscribe "food"
 ```

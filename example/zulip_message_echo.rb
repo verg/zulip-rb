@@ -7,12 +7,14 @@ class ZulipEcho
 
   def run
     client = Zulip::Client.new do |config|
-      config.bot_email_address = ENV['BOT_EMAIL_ADDRESS'] || "bot@example.com"
+      config.email_address = ENV['BOT_EMAIL_ADDRESS'] || "bot@example.com"
       config.api_key = ENV['BOT_API_KEY'] || "apikey"
     end
 
-    client.stream_messages do |message|
-      client.send_private_message(private_message_content(message), "example@gmail.com")
+    client.stream_private_messages do |message|
+      if message.stream == "test-stream"
+        client.send_private_message(private_message_content(message), "example@gmail.com")
+      end
     end
   end
 

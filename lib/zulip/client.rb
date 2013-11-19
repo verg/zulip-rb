@@ -17,7 +17,7 @@ module Zulip
     include Zulip::Client::EventStreaming
     include Zulip::Client::EventParser
 
-    attr_accessor :bot_email_address, :api_key
+    attr_accessor :email_address, :api_key
     attr_writer :connection
     ENDPOINT = "https://api.zulip.com"
 
@@ -33,7 +33,7 @@ module Zulip
 
     def initialize_connection
       conn = Faraday.new(url: ENDPOINT)
-      conn.basic_auth(bot_email_address, api_key)
+      conn.basic_auth(email_address, api_key)
       conn
     end
 
