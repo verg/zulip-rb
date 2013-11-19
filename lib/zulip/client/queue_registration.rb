@@ -1,6 +1,9 @@
 module Zulip
   class Client
     module QueueRegistration
+
+      class InvalideEmailOrAPI < StandardError; end
+
       EVENT_TYPES = { message: "message" }
       # TODO: Add support for other event types
       # TODO: Add support setting apply markdown to false
@@ -12,6 +15,8 @@ module Zulip
         if event_types
           connection.params = { "event_types" => json_encode_list(event_types) }
         end
+
+        raise InvalideEmailOrAPI if registration_response['result'] == "error"
 
         QueueRegistrationResponse.new( registration_response['queue_id'],
                                       registration_response['last_event_id'] )
