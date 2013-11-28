@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-`$ gem install zulip-rb`
+`$ gem install zulip`
 
 ### Configuration
 You can obtain your Zulip API key, create bots, and manage bots all
