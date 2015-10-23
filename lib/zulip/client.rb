@@ -17,11 +17,12 @@ module Zulip
     include Zulip::Client::EventStreaming
     include Zulip::Client::EventParser
 
-    attr_accessor :email_address, :api_key
+    attr_accessor :email_address, :api_key, :endpoint, :verify_ssl
     attr_writer :connection
-    ENDPOINT = "https://api.zulip.com"
 
     def initialize
+      @endpoint = 'https://api.zulip.com'
+      @verify_ssl = true
       yield self if block_given?
     end
 
@@ -32,7 +33,7 @@ module Zulip
     private
 
     def initialize_connection
-      conn = Faraday.new(url: ENDPOINT)
+      conn = Faraday.new({ url: endpoint, ssl: { verify: verify_ssl } })
       conn.basic_auth(email_address, api_key)
       conn
     end

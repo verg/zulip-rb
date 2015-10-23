@@ -25,6 +25,8 @@ Set your api key and email address by passing a block to your Zulip::Client inst
 client = Zulip::Client.new do |config|
 config.email_address = "YOUR_EMAIL_ADDRESS"
 config.api_key = "YOUR_API_KEY"
+config.endpoint = "YOUR_ENDPOINT"	# defaults to https://api.zulip.com or your own Zulip server
+config.verify_ssl = true		# defaults to true, but can be set to false for private SSL certs
 end
 ```
 
